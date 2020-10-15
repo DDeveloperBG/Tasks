@@ -1,0 +1,5 @@
+-- DELETE ALL RECORDS FROM FROM TABLE Occupancies FROM Hotel DATABASE, task 24
+
+USE Hotel
+
+DELETE FROM Occupancies

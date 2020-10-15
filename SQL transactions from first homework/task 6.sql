@@ -1,0 +1,7 @@
+-- DELETE ALL TABLES FROM THE Minions DATABASE, task 6
+
+USE Minions
+
+DROP TABLE Minions
+
+DROP TABLE Towns

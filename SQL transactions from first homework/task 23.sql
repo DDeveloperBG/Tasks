@@ -1,0 +1,8 @@
+--DECREASE TAX RATE BY 3% TO ALL PAYMENTS FROM Hotel DATABASE, task 23
+
+USE Hotel
+
+UPDATE Payments
+SET TaxRate -= TaxRate * 0.03
+
+SELECT TaxRate FROM Payments

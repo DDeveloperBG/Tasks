@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace SoftUniExercises
+namespace Calculator
 {
     class Program
     {

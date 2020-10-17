@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace SoftUniExercises
+namespace PackagingFigures
 {
     class Program
     {

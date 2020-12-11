@@ -1,0 +1,29 @@
+body {
+    padding: 5px;
+}
+
+main {
+    background-color: #E6E5E5;
+    font-family: sans-serif;
+    margin: auto;
+    width: fit-content;
+    padding: 30px;
+}
+
+h3 {
+    color: #234465;
+    text-align: center;
+}
+
+ol {
+    margin: auto;
+    padding: 20px;
+    list-style-position: outside;
+}
+
+ol li {
+    padding-top: 10px;
+    text-align: start;
+    border-bottom-width: 1px ;
+    border-bottom-style: solid;
+}

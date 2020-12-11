@@ -36,12 +36,12 @@ class Kitchen {
     addToMenu(meal, neededProducts, price) {
         let message;
         if (!this.menu[meal]) {
-            let products = neededProducts.map(productData => {
+            neededProducts = neededProducts.map(productData => {
                 let [name, quantity] = productData.split(' ');
                 return { name, quantity };
             });
 
-            this.menu[meal] = { products, price, neededProducts };
+            this.menu[meal] = { products: neededProducts, price };
             message = `Great idea! Now with the ${meal} we have ${Object.keys(this.menu).length} meals in the menu, other ideas?`;
         } else {
             message = `The ${meal} is already in our menu, try something different.`;
@@ -66,11 +66,11 @@ class Kitchen {
         if (!this.menu[meal]) {
             message = `There is not ${meal} yet in our menu, do you want to order something else?`;
         } else {
-            let mealIsAvaliable = this.menu[meal].neededProducts.every(product => this.productsInStock[product.name] &&
+            let mealIsAvaliable = this.menu[meal].products.every(product => this.productsInStock[product.name] &&
                 this.productsInStock[product.name] >= product.quantity);
 
             if (mealIsAvaliable) {
-                this.menu[meal].neededProducts.forEach(product => {
+                this.menu[meal].products.forEach(product => {
                     this.productsInStock[product.name] -= product.quantity;
 
                     if (this.productsInStock[product.name] == 0) {
@@ -89,14 +89,3 @@ class Kitchen {
         return message;
     }
 }
-
-function test() {
-    let kitchen = new Kitchen(1000);
-
-    console.log(kitchen.addToMenu('frozenYogurt', ['Yogurt 1', 'Honey 1', 'Banana 1', 'Strawberries 10'], 9.99));
-    console.log(kitchen.addToMenu('Pizza', ['Flour 0.5', 'Oil 0.2', 'Yeast 0.5', 'Salt 0.1', 'Sugar 0.1', 'Tomato sauce 0.5', 'Pepperoni 1', 'Cheese 1.5'], 15.55));
-
-    console.log(kitchen.showTheMenu());
-}
-
-test();

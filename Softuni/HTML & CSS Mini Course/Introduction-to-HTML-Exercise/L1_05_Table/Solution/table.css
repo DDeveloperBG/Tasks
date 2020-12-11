@@ -1,0 +1,13 @@
+body {
+    font-family: sans-serif;
+}
+
+table, table th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table td {
+    text-align: end;
+    padding: 2px;
+}

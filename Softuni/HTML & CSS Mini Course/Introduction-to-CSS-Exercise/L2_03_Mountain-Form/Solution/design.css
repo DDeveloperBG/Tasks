@@ -1,0 +1,100 @@
+html { 
+    height: 100%; 
+}
+
+body {
+    font-family: Lato, sans-serif;
+    margin: 7rem 30rem 7rem 30rem;
+    margin-right: 0;
+}
+
+body section {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+body section#left {
+    background-image: linear-gradient(to top, rgba(58, 8, 43, 0.65), rgba(18, 108, 243, 0.3)), url("./Images/peak.jpg");
+    height: 75vh;
+    width: 25vw;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+body section#left h1 { 
+    font-size: 40px;
+    margin-top: 3rem;
+}
+
+body section#left p { 
+    font-size: large;
+    font-style: italic;
+    font-weight: bolder;
+    margin-top: 55vh;
+}
+
+body section#left svg { 
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+body section#right {
+    border: 4px #38082A solid;
+    height: 74vh;
+    width: 25vw;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 1px;
+    padding-right: 3rem;
+}
+
+body section#right form ul {
+    padding-top: 7rem;
+    margin-left: 5rem;
+    padding-right: 5rem;
+}
+
+body section#right form ul li {
+    list-style-type: none;
+}
+
+body section#right form ul li label {
+    color: rgb(218, 217, 220);
+    text-transform: uppercase;
+}
+
+body section#right form ul li input {
+    margin-top: 5px;
+    border: none;
+    border-bottom: 1px solid rgb(118, 115, 115);
+    color: rgb(118, 115, 115);
+    font-size: x-large;
+    margin-bottom: 1.5rem;
+}
+
+body section#right ul {
+    margin-left: 5rem;
+}
+
+body section#right ul li {
+    list-style-type: none;
+    display: inline;
+}
+
+body section#right ul li button {
+    border: none;
+    background-color: #38082A;
+    color: white;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    font-size: medium;
+}
+
+body section#right ul li a { 
+    font-weight: 600;
+    color: #38082A;
+    text-decoration: none;
+}

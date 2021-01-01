@@ -1,0 +1,119 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    text-align: center;
+}
+
+hr {
+    width: 60px;
+    height: 2px;
+    background-color: rgb(214,116,114);
+    border: none;
+}
+
+header {
+    width: 99vw;
+    text-align: center;
+}
+
+header ul {
+    padding: 0;
+}
+
+header ul li {
+    list-style-type: none;
+    display: inline;
+    margin-left: 2rem;
+}
+
+header ul li a {
+    text-decoration: none;
+    color: rgb(214,116,114);
+    font-weight: 600;
+}
+
+main section#intro {
+    background-image: linear-gradient(to top, rgb(0, 0, 0, 0.55), rgb(0, 0, 0, 0.3)), url(./Images/header-flower.png);
+    width: 99vw;
+    padding-left: 2px;
+    height: 50vh;
+    background-size: 100% 100%;
+    background-repeat: no-repeat; 
+    color: white;
+}
+
+main section#intro h1 {
+    font-weight: normal;
+    font-size: 42px;
+    padding-top: 19vh;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+main section#intro p {
+    width: 23vw;
+    padding-left: 38.5vw;
+}
+
+main section#info1 {
+    background-color: rgb(214,116,114);
+    color: white;
+}
+
+main section#info1 h1 {
+    margin: 0;
+    margin-bottom: 15px;
+    padding-top: 2rem;
+    font-weight: normal;
+    font-size: large;
+}
+
+main section#info1 hr { 
+    background-color: white;
+}
+
+main section#info1 p { 
+    width: 25vw;
+    padding-left: 37.5vw;
+    margin-bottom: 1.5rem;
+}
+
+main section#info1 button {
+    border: none;
+    color: rgb(214,116,114);
+    border-radius: 3px;
+    font-weight: 900;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 2rem;
+}
+
+main section#info2 h1 {
+    padding-top: 1rem;
+    font-size: large;
+}
+
+main section#info2 ul {
+    padding: 0;
+    margin-top: 1.5rem;
+    align-items: center;
+}
+
+main section#info2 ul li {
+    display: inline-block;
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
+    vertical-align: top;
+}
+
+main section#info2 ul li p {
+    width: 10vw;
+    color: #9FA5B0;
+}
+
+footer {
+    vertical-align: bottom;
+    background-color: rgb(214,116,114);
+    color: white;
+    padding: 15px;
+    padding-left: 0;
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "img": "https://www.ikea.com/PIAimages/0447583_PE597395_S5.JPG",
+        "name": "Sofa",
+        "price": "259",
+        "decFactor": "0.4"
+    },
+    {
+        "img": "https://valueflooringandfurniture.ie/wp-content/uploads/2020/02/Nevada-4-Door-2-Drawer-Wardrobes-Oak-Value-Flooring-and-Furniture.jpg",
+        "name": "Wardrobe",
+        "price": "120",
+        "decFactor": "1.2"
+    }
+]

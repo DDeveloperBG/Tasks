@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NestedLoopsWithRecursion", "NestedLoopsWithRecursion\NestedLoopsWithRecursion.csproj", "{16A00D4F-6422-458C-AD09-1EA520309DE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinationsWithRepetition", "CombinationsWithRepetition\CombinationsWithRepetition.csproj", "{44219AAF-0A27-4C5E-A812-31580FFAA16A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TowerOfHanoi", "TowerOfHanoi\TowerOfHanoi.csproj", "{4D8A06B7-E885-4AC3-9A5B-79BD62536CF7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinationsWithoutRepetition", "CombinationsWithoutRepetition\CombinationsWithoutRepetition.csproj", "{E41A826A-5307-4F2A-8C9D-720DD67FBC82}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectedAreasInMatrix", "ConnectedAreasInMatrix\ConnectedAreasInMatrix.csproj", "{17D10E70-D208-4DEE-A051-A6733CEB7938}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReverseArray", "ReverseArray\ReverseArray.csproj", "{8AD1F5C1-9C05-42E5-956F-3CC540E4A890}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16A00D4F-6422-458C-AD09-1EA520309DE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A00D4F-6422-458C-AD09-1EA520309DE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A00D4F-6422-458C-AD09-1EA520309DE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A00D4F-6422-458C-AD09-1EA520309DE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44219AAF-0A27-4C5E-A812-31580FFAA16A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44219AAF-0A27-4C5E-A812-31580FFAA16A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44219AAF-0A27-4C5E-A812-31580FFAA16A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44219AAF-0A27-4C5E-A812-31580FFAA16A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D8A06B7-E885-4AC3-9A5B-79BD62536CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D8A06B7-E885-4AC3-9A5B-79BD62536CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D8A06B7-E885-4AC3-9A5B-79BD62536CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D8A06B7-E885-4AC3-9A5B-79BD62536CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E41A826A-5307-4F2A-8C9D-720DD67FBC82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E41A826A-5307-4F2A-8C9D-720DD67FBC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E41A826A-5307-4F2A-8C9D-720DD67FBC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E41A826A-5307-4F2A-8C9D-720DD67FBC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D10E70-D208-4DEE-A051-A6733CEB7938}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D10E70-D208-4DEE-A051-A6733CEB7938}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D10E70-D208-4DEE-A051-A6733CEB7938}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D10E70-D208-4DEE-A051-A6733CEB7938}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD1F5C1-9C05-42E5-956F-3CC540E4A890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD1F5C1-9C05-42E5-956F-3CC540E4A890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD1F5C1-9C05-42E5-956F-3CC540E4A890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD1F5C1-9C05-42E5-956F-3CC540E4A890}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DFA3A5C9-24B8-48CB-9D2F-E2C698F711A7}
+	EndGlobalSection
+EndGlobal

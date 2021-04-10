@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongestZig-ZagSubsequence", "LongestZig-ZagSubsequence.csproj", "{885631DF-08F7-4972-90B2-84D28DB95B82}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{885631DF-08F7-4972-90B2-84D28DB95B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{885631DF-08F7-4972-90B2-84D28DB95B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{885631DF-08F7-4972-90B2-84D28DB95B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{885631DF-08F7-4972-90B2-84D28DB95B82}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0092E8EA-FCFC-40A5-8900-D16C2F547B07}
+	EndGlobalSection
+EndGlobal

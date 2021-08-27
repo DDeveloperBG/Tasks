@@ -1,0 +1,32 @@
+CREATE DATABASE University;
+
+CREATE TABLE Subjects(
+	SubjectID INT IDENTITY PRIMARY KEY,
+	SubjectName NVARCHAR(50) NOT NULL,
+);
+
+CREATE TABLE Majors(
+	MajorID INT IDENTITY PRIMARY KEY,
+	[Name] NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Students(
+	StudentID INT IDENTITY PRIMARY KEY,
+	StudentNumber NVARCHAR(20) UNIQUE NOT NULL,
+	StudentName NVARCHAR(50) NOT NULL,
+	MajorID INT REFERENCES Majors(MajorID)
+);
+
+CREATE TABLE Agenda(
+	StudentID INT REFERENCES Students(StudentID),
+	SubjectID INT REFERENCES Subjects(SubjectID),
+	CONSTRAINT PK_StudentID_SubjectID
+	PRIMARY KEY (StudentID, SubjectID)
+);
+
+CREATE TABLE Payments(
+	PaymentID INT IDENTITY PRIMARY KEY,
+	PaymentDate DATE NOT NULL,
+	PaymentAmount DECIMAL(8, 2),
+	StudentID INT NOT NULL REFERENCES Students(StudentID)
+);

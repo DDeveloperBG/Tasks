@@ -1,0 +1,11 @@
+CREATE TABLE Passports(
+	PassportID INT IDENTITY PRIMARY KEY,
+	PassportNumber CHAR(8) UNIQUE NOT NULL,
+);
+
+CREATE TABLE Persons(
+	PersonID INT IDENTITY PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	Salary DECIMAL(10, 2),
+	PassportID INT UNIQUE REFERENCES Passports(PassportID)
+);

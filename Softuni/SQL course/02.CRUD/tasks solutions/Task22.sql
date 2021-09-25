@@ -1,5 +1,5 @@
-USE [Geography];
+USE [Geography]
 
 SELECT PeakName
-FROM Peaks
-ORDER BY PeakName ASC;
+	FROM Peaks
+	ORDER BY PeakName ASC

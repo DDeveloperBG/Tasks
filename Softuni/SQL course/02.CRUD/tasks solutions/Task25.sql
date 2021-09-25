@@ -1,5 +1,5 @@
-USE Diablo;
+USE Diablo
 
 SELECT [Name]
-FROM Characters
-ORDER BY [Name];
+	FROM Characters
+	ORDER BY [Name]

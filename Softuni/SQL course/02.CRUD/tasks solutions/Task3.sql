@@ -1,4 +1,4 @@
 USE SoftUni;
 
 SELECT Name
-FROM Departments;
+	FROM Departments

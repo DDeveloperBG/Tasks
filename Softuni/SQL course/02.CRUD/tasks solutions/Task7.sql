@@ -1,4 +1,4 @@
-USE SoftUni;
+USE SoftUni
 
 SELECT DISTINCT Salary
-FROM Employees;
+	FROM Employees

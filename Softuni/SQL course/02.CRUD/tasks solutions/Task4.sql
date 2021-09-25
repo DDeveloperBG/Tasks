@@ -1,4 +1,4 @@
 USE SoftUni;
 
 SELECT FirstName, LastName, Salary
-FROM Employees;
+	FROM Employees

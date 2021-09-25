@@ -58,7 +58,7 @@ namespace DataTransformer
                 {
                     var values = inputRow.Split('	').Select(value =>
                     {
-                        if(value.Any(character => char.IsLetter(character)))
+                        if(value.Any(character => char.IsLetter(character)) && value != "NULL")
                         {
                             return $"'{value}'";
                         }

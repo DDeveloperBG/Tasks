@@ -1,4 +1,4 @@
-USE [Geography];
+USE [Geography]
 
 SELECT CountryName, CountryCode, 
 	(CASE
@@ -6,4 +6,4 @@ SELECT CountryName, CountryCode,
 		ELSE 'Not Euro'
 	END) AS 'Currency'
 FROM Countries
-ORDER BY CountryName;
+ORDER BY CountryName

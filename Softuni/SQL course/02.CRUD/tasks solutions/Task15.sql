@@ -1,5 +1,8 @@
-USE SoftUni;
+USE SoftUni
 
 SELECT *
-FROM Employees
-ORDER BY Salary DESC, FirstName, LastName DESC, MiddleName;
+	FROM Employees
+	ORDER BY Salary DESC, 
+		FirstName, 
+		LastName DESC, 
+		MiddleName

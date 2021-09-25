@@ -1,5 +1,5 @@
-USE SoftUni;
+--USE SoftUni
 
 SELECT FirstName, LastName
-FROM Employees
-WHERE LastName LIKE '%EI%';
+	FROM Employees
+	WHERE LastName LIKE '%EI%'

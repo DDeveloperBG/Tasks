@@ -1,4 +1,4 @@
-USE SoftUni;
+USE SoftUni
 
 SELECT DISTINCT JobTitle
-FROM Employees;
+	FROM Employees

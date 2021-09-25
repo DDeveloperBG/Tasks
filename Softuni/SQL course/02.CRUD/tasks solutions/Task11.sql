@@ -1,5 +1,5 @@
-USE SoftUni;
+USE SoftUni
 
 SELECT FirstName, LastName
-FROM Employees
-WHERE ManagerID IS NULL;
+	FROM Employees
+	WHERE ManagerID IS NULL

@@ -8,12 +8,12 @@ USE Users
 
 CREATE TABLE Users
 (
-	Id INT NOT NULL IDENTITY PRIMARY KEY,
+	Id BIGINT NOT NULL IDENTITY PRIMARY KEY,
 	Username VARCHAR(30) NOT NULL,
 	[Password] VARCHAR(26) NOT NULL,
 	ProfilePicture IMAGE,
 	LastLoginTime TIME,
-	IsDeleted BINARY
+	IsDeleted BIT
 )
 
 INSERT INTO Users (Username, [Password])

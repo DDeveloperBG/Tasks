@@ -1,5 +1,5 @@
-USE SoftUni;
+USE SoftUni
 
 SELECT FirstName, LastName
-FROM Employees
-WHERE NOT (DepartmentID = 4);
+	FROM Employees
+	WHERE NOT (DepartmentID = 4)

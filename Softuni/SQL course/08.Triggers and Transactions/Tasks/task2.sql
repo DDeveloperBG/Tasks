@@ -1,4 +1,4 @@
-USE Bank
+--USE Bank
 
 CREATE TABLE NotificationEmails(
 	Id INT IDENTITY PRIMARY KEY,

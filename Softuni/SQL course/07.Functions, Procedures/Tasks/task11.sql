@@ -1,6 +1,6 @@
 CREATE FUNCTION ufn_CalculateFutureValue 
-	(@sum DECIMAL(12, 4), @yearlyInterestRate FLOAT, @years INT)
-RETURNS DECIMAL(12, 4)
+	(@sum MONEY, @yearlyInterestRate FLOAT, @years INT)
+RETURNS MONEY
 BEGIN
-	RETURN ROUND(@sum * POWER(1 + @yearlyInterestRate, @years), 4)
+	RETURN @sum * POWER(1 + @yearlyInterestRate, @years)
 END

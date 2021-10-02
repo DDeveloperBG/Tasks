@@ -1,5 +1,6 @@
-USE Gringotts
+--USE Gringotts
 
-SELECT DepositGroup, MAX(MagicWandSize) AS LongestMagicWand
-FROM WizzardDeposits
-GROUP BY DepositGroup
+SELECT DepositGroup, 
+		MAX(MagicWandSize) AS LongestMagicWand
+	FROM WizzardDeposits
+	GROUP BY DepositGroup

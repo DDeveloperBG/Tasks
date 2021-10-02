@@ -1,4 +1,4 @@
-USE Bank
+--USE Bank
 
 CREATE TABLE Logs (
 	LogId INT IDENTITY PRIMARY KEY, 

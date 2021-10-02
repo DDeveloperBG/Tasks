@@ -1,4 +1,4 @@
-USE Gringotts
+--USE Gringotts
 
 SELECT COUNT(*)
-FROM WizzardDeposits;
+	FROM WizzardDeposits

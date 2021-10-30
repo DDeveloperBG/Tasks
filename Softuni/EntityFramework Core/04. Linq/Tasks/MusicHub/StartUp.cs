@@ -37,7 +37,9 @@
         {
             public static string ExportAlbumsInfo(MusicHubDbContext context, int producerId)
             {
-                var albums = context.Albums//.ToList() <- FOR JUDGE TO PASS !!!
+                var albums = context
+		            .Albums
+                    //.ToList() <- FOR JUDGE TO PASS !!!
                     .Where(x => x.ProducerId == producerId)
                     .Select(x => new TempAlbum
                     {
@@ -135,7 +137,8 @@
             {
                 var wantedDuration = new TimeSpan(0, 0, duration);
 
-                var songs = context.Songs
+                var songs = context
+                    .Songs
                     .Where(x => x.Duration > wantedDuration)
                     .Select(x => new TempSong
                     {
@@ -149,7 +152,7 @@
 
                         AlbumProducer = x.Album.Producer.Name,
 
-                        Duration = x.Duration.ToString(@"hh\:mm\:ss")
+                        Duration = x.Duration.ToString(@"c")
                     })
                     .OrderBy(x => x.SongName)
                     .ThenBy(x => x.WriterName)

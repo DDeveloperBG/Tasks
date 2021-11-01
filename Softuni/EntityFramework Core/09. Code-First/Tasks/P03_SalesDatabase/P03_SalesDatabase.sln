@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03_SalesDatabase", "P03_SalesDatabase.csproj", "{3C6B98E0-823B-4F99-9FEA-CB45961292AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03_SalesDatabase.Importer", "..\P03_SalesDatabase.Importer\P03_SalesDatabase.Importer.csproj", "{91C8B0A6-2425-4472-98C7-F1A1352007D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C6B98E0-823B-4F99-9FEA-CB45961292AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6B98E0-823B-4F99-9FEA-CB45961292AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6B98E0-823B-4F99-9FEA-CB45961292AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6B98E0-823B-4F99-9FEA-CB45961292AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C8B0A6-2425-4472-98C7-F1A1352007D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C8B0A6-2425-4472-98C7-F1A1352007D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C8B0A6-2425-4472-98C7-F1A1352007D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C8B0A6-2425-4472-98C7-F1A1352007D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4BC70F2-7134-475F-9B0F-FF2D79268D31}
+	EndGlobalSection
+EndGlobal

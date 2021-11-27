@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.HTTP", "SIS.HTTP\SIS.HTTP.csproj", "{0782E00E-8FC7-4039-81B5-F05C778FE099}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIS.WebServer", "SIS.WebServer\SIS.WebServer.csproj", "{1B64F8E2-B8D0-4979-B1EF-9B19007058D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{4700D376-D129-477A-8B55-14828FC11736}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0782E00E-8FC7-4039-81B5-F05C778FE099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0782E00E-8FC7-4039-81B5-F05C778FE099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0782E00E-8FC7-4039-81B5-F05C778FE099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0782E00E-8FC7-4039-81B5-F05C778FE099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B64F8E2-B8D0-4979-B1EF-9B19007058D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B64F8E2-B8D0-4979-B1EF-9B19007058D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B64F8E2-B8D0-4979-B1EF-9B19007058D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B64F8E2-B8D0-4979-B1EF-9B19007058D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4700D376-D129-477A-8B55-14828FC11736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4700D376-D129-477A-8B55-14828FC11736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4700D376-D129-477A-8B55-14828FC11736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4700D376-D129-477A-8B55-14828FC11736}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CC0C2BCA-9286-4903-8593-B26BBE9E2AB7}
+	EndGlobalSection
+EndGlobal

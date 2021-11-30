@@ -5,7 +5,7 @@ namespace SIS.HTTP.Headers
     public class HttpHeader
     {
         public const string Host = "Host";
-        public const string ContentType = "ContentType";
+        public const string ContentType = "Content-Type";
         public const string ContentLength = "Content-Length";
         public const string Location = "Location";
         public const string SetCookie = "Set-Cookie";

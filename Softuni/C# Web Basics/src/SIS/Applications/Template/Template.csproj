@@ -6,16 +6,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SIS.WebServer\SIS.WebServer.csproj" />
+    <ProjectReference Include="..\..\SIS.WebServer\SIS.WebServer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Resourses\Icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resourses\SearchDogForm.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="wwwroot\Icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="wwwroot\Icon.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Models\" />
   </ItemGroup>
 
 </Project>

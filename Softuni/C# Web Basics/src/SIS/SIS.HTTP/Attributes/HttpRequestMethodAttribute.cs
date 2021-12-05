@@ -3,8 +3,9 @@ using System;
 
 namespace SIS.HTTP.Attributes
 {
-    public class HttpRequestMethodAttribute : Attribute
+    public abstract class HttpRequestMethodAttribute : Attribute
     {
-        public HttpRequestMethod RequestMethod { get; set; }
+        public abstract HttpRequestMethod RequestMethod { get; }
+        public string Url { get; set; }
     }
 }

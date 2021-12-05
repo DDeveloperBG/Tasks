@@ -37,7 +37,7 @@ namespace SIS.WebServer
         {
             try
             {
-                var httpRequest = await ReadRequestAsync().ConfigureAwait(false);
+                var httpRequest = await ReadRequestAsync();
 
                 if (httpRequest != null)
                 {
@@ -48,20 +48,20 @@ namespace SIS.WebServer
 
                     SetResponseSession(httpResponse, sessionId);
 
-                    await PrepareResponseAsync(httpResponse).ConfigureAwait(false);
+                    await PrepareResponseAsync(httpResponse);
                 }
             }
             catch (BadRequestException e)
             {
                 await PrepareResponseAsync(
                      new TextResult(e.ToString(),
-                     HttpResponseStatusCode.BadRequest)).ConfigureAwait(false);
+                     HttpResponseStatusCode.BadRequest));
             }
             catch (Exception e)
             {
                 await PrepareResponseAsync(
                      new TextResult(e.ToString(),
-                     HttpResponseStatusCode.InternalServerError)).ConfigureAwait(false);
+                     HttpResponseStatusCode.InternalServerError));
             }
 
             client.Shutdown(SocketShutdown.Both);
@@ -102,7 +102,7 @@ namespace SIS.WebServer
 
             while (true)
             {
-                int numberOfBytesRead = await client.ReceiveAsync(data.Array, SocketFlags.None).ConfigureAwait(false);
+                int numberOfBytesRead = await client.ReceiveAsync(data.Array, SocketFlags.None);
 
                 if (numberOfBytesRead == 0)
                 {
@@ -150,7 +150,7 @@ namespace SIS.WebServer
         {
             byte[] byteSegments = httpResponse.GetBytes();
 
-            await client.SendAsync(byteSegments, SocketFlags.None).ConfigureAwait(false);
+            await client.SendAsync(byteSegments, SocketFlags.None);
         }
     }
 }

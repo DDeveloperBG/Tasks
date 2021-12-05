@@ -23,6 +23,9 @@
 
   <ItemGroup>
     <Folder Include="Data\Models\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>

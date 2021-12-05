@@ -1,7 +1,9 @@
-﻿using SIS.WebServer.Routing;
+﻿using SIS.WebServer.Controllers;
+using SIS.WebServer.Routing;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace SIS.WebServer
@@ -18,10 +20,14 @@ namespace SIS.WebServer
 
         private bool isRunning;
 
-        public Server(int port, IServerRoutingTable serverRoutingTable)
+        public Server(int port, Assembly caller)
         {
             this.port = port;
-            this.serverRoutingTable = serverRoutingTable;
+            this.serverRoutingTable = new ServerRoutingTable();
+
+            serverRoutingTable
+                .LoadControllers(caller)
+                .LoadStaticFiles();
 
             listener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
         }
@@ -37,7 +43,7 @@ namespace SIS.WebServer
             {
                 Console.WriteLine("Waiting for client...");
 
-                var client = await listener.AcceptSocketAsync().ConfigureAwait(false);
+                var client = await listener.AcceptSocketAsync();
 
                 ListenAsync(client);
             }
@@ -46,7 +52,7 @@ namespace SIS.WebServer
         public async Task ListenAsync(Socket client)
         {
             var connectionHandler = new ConnectionHandler(client, serverRoutingTable);
-            await connectionHandler.ProcessRequestAsync().ConfigureAwait(false);
+            await connectionHandler.ProcessRequestAsync();
         }
     }
 }

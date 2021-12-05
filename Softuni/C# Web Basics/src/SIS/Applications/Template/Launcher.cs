@@ -13,7 +13,7 @@ namespace Demo
 
             Server server = new Server(81, serverRoutingTable);
 
-            await server.RunAsync().ConfigureAwait(false);
+            await server.RunAsync();
         }
     }
 }

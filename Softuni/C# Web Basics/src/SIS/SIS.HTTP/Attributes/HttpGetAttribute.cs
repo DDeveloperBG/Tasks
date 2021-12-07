@@ -6,7 +6,12 @@ namespace SIS.HTTP.Attributes
     {
         public HttpGetAttribute()
         {
-            RequestMethod = HttpRequestMethod.GET;
         }
+
+        public HttpGetAttribute(string url) : base(url) 
+        {
+        }
+
+        public override HttpRequestMethod RequestMethod => HttpRequestMethod.GET;
     }
 }

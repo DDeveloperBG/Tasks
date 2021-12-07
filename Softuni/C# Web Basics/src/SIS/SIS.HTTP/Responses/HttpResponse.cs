@@ -89,8 +89,6 @@ namespace SIS.HTTP.Responses
                     .Append(GlobalConstants.HttpNewLine);
             }
 
-            result.Append(GlobalConstants.HttpNewLine);
-
             return result.ToString();
         }
     }

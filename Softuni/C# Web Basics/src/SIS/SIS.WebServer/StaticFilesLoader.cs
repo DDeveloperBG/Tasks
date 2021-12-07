@@ -1,4 +1,5 @@
 ﻿using SIS.HTTP.Enums;
+using SIS.HTTP.Headers;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
 using SIS.WebServer.Results;
@@ -12,6 +13,7 @@ namespace SIS.WebServer
     public static class StaticFilesLoader
     {
         private const string globalResoursesFolderName = "wwwroot";
+        private const int StaticResourseDefaultExpirationDays = 3;
 
         public static IServerRoutingTable LoadStaticFiles(this IServerRoutingTable serverRoutingTable)
         {
@@ -48,10 +50,19 @@ namespace SIS.WebServer
             byte[] fileData = File.ReadAllBytes(path);
             string fileType = ExtractFileType(path);
 
-            ByteResult result =
-                new ByteResult(fileData, HttpResponseStatusCode.Ok, contentTypes[fileType]);
+            return (request) =>
+            {
+                ByteResult result =
+                    new ByteResult(fileData, HttpResponseStatusCode.Ok, contentTypes[fileType]);
+               
+                result.Headers
+                    .AddHeader(new HttpHeader(
+                            HttpHeader.Cash,
+                            $"public, max-age={new TimeSpan(StaticResourseDefaultExpirationDays, 0, 0).TotalSeconds}")
+                    );
 
-            return (request) => result;
+                return result;
+            };
         }
 
         private static string ExtractFileType(string path)

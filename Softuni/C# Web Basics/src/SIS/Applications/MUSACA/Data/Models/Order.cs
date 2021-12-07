@@ -9,16 +9,14 @@ namespace MUSACA.Data.Models
         [Key]
         public Guid Id { get; set; }
 
-        [Required]
         public OrderStatus Status { get; set; }
-
-        [Required]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
 
         public int Quantity { get; set; }
 
-        public Guid CashierId { get; set; }
-        public User Cashier { get; set; }
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public Guid ReceiptId { get; set; }
+        public Receipt Receipt { get; set; }
     }
 }

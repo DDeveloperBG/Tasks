@@ -1,15 +1,13 @@
 ﻿using SIS.WebServer;
 using System.Threading.Tasks;
 
-namespace Demo
+namespace MUSACA
 {
     class Launcher
     {
         static async Task Main()
         {         
-            Server server = new Server(81, typeof(Launcher).Assembly);
-
-            await server.RunAsync();
+            await Server.RunAsync(new Startup(), 81);
         }
     }
 }

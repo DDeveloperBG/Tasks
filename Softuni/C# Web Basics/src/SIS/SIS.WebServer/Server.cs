@@ -1,4 +1,5 @@
 ﻿using SIS.WebServer.Controllers;
+using SIS.WebServer.DependencyInversion;
 using SIS.WebServer.Routing;
 using System;
 using System.Net;
@@ -8,38 +9,34 @@ using System.Threading.Tasks;
 
 namespace SIS.WebServer
 {
-    public class Server
+    public static class Server
     {
         private const string LocalhostIpAddress = "127.0.0.1";
 
-        private readonly int port;
+        private static IServerRoutingTable ServerRoutingTable;
 
-        private readonly TcpListener listener;
+        private static bool IsRunning;
 
-        private readonly IServerRoutingTable serverRoutingTable;
-
-        private bool isRunning;
-
-        public Server(int port, Assembly caller)
+        public static async Task RunAsync(IMvcApplication application, int port)
         {
-            this.port = port;
-            this.serverRoutingTable = new ServerRoutingTable();
+            ServerRoutingTable = new ServerRoutingTable();
+            IServiceCollection serviceCollection = new ServiceCollection();
 
-            serverRoutingTable
-                .LoadControllers(caller)
+            application.ConfigureServices(serviceCollection);
+            application.Configure(ServerRoutingTable);
+
+            ServerRoutingTable
+                .LoadControllers(application.GetType().Assembly, serviceCollection)
                 .LoadStaticFiles();
 
-            listener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
-        }
+            TcpListener listener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
 
-        public async Task RunAsync()
-        {
             listener.Start();
-            isRunning = true;
+            IsRunning = true;
 
             Console.WriteLine($"Server started at http://{LocalhostIpAddress}:{port}");
 
-            while (isRunning)
+            while (IsRunning)
             {
                 Console.WriteLine("Waiting for client...");
 
@@ -49,9 +46,9 @@ namespace SIS.WebServer
             }
         }
 
-        public async Task ListenAsync(Socket client)
+        private static async Task ListenAsync(Socket client)
         {
-            var connectionHandler = new ConnectionHandler(client, serverRoutingTable);
+            var connectionHandler = new ConnectionHandler(client, ServerRoutingTable);
             await connectionHandler.ProcessRequestAsync();
         }
     }

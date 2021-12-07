@@ -4,9 +4,9 @@ using MUSACA.Data.Models;
 
 namespace MUSACA.Data
 {
-    public class MusacaContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public MusacaContext()
+        public ApplicationDbContext()
         {
         }
 
@@ -25,7 +25,26 @@ namespace MUSACA.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder
+                .Entity<Product>()
+                .Property(x => x.Barcode)
+                .HasMaxLength(12)
+                .IsFixedLength(true);
+
+            modelBuilder
+                .Entity<Order>(e =>
+                {
+                    e.HasOne(x => x.Product)
+                        .WithMany(x => x.Orders);
+
+                    e.HasOne(x => x.Receipt)
+                        .WithMany(x => x.Orders);
+                });
+
+            modelBuilder
+               .Entity<Receipt>()
+               .HasOne(x => x.Cashier)
+                       .WithMany(x => x.Receipts);
         }
     }
 }

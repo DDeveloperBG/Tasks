@@ -4,10 +4,14 @@ namespace SIS.HTTP.Attributes
 {
     public class HttpDeleteAttribute : HttpRequestMethodAttribute
     {
-        public HttpDeleteAttribute(string )
+        public HttpDeleteAttribute()
         {
         }
 
-        public override HttpRequestMethod RequestMethod { get => HttpRequestMethod.DELETE; }
+        public HttpDeleteAttribute(string url) : base(url)
+        {
+        }
+
+        public override HttpRequestMethod RequestMethod => HttpRequestMethod.DELETE;
     }
 }

@@ -10,6 +10,7 @@ namespace SIS.HTTP.Headers
         public const string Location = "Location";
         public const string SetCookie = "Set-Cookie";
         public const string Cookie = "Cookie";
+        public const string Cash = "Cache-Control";
 
         public HttpHeader(string key, string value)
         {

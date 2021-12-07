@@ -6,7 +6,12 @@ namespace SIS.HTTP.Attributes
     {
         public HttpPostAttribute()
         {
-            RequestMethod = HttpRequestMethod.POST;
         }
+
+        public HttpPostAttribute(string url) : base(url)
+        {
+        }
+
+        public override HttpRequestMethod RequestMethod => HttpRequestMethod.POST;
     }
 }

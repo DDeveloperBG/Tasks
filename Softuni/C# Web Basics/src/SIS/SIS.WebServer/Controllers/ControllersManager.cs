@@ -1,9 +1,12 @@
 ﻿using SIS.HTTP.Attributes;
 using SIS.HTTP.Enums;
+using SIS.HTTP.Exceptions;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer.DependencyInversion;
 using SIS.WebServer.Routing;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -15,10 +18,9 @@ namespace SIS.WebServer.Controllers
         private static readonly Type BaseControllerType = typeof(Controller);
         private static readonly Type BaseResponceType = typeof(IHttpResponse);
         private static readonly Type BaseRequestMethodAttributeType = typeof(HttpRequestMethodAttribute);
-        private static readonly Type ActionFuncType = typeof(Func<IHttpRequest, IHttpResponse>);
         private static readonly BindingFlags MethodCriteria = BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.DeclaredOnly;
 
-        public static IServerRoutingTable LoadControllers(this IServerRoutingTable serverRoutingTable, Assembly caller)
+        public static IServerRoutingTable LoadControllers(this IServerRoutingTable serverRoutingTable, Assembly caller, IServiceCollection serviceCollection)
         {
             var controllersTypes = caller
                 .GetExportedTypes()
@@ -27,16 +29,16 @@ namespace SIS.WebServer.Controllers
 
             foreach (var controllerType in controllersTypes)
             {
-                ProcessController(serverRoutingTable, controllerType);
+                ProcessController(serverRoutingTable, controllerType, serviceCollection);
             }
 
             return serverRoutingTable;
         }
 
-        private static void ProcessController(IServerRoutingTable serverRoutingTable, Type controller)
+        private static void ProcessController(IServerRoutingTable serverRoutingTable, Type controller, IServiceCollection serviceCollection)
         {
             string controllerName = controller.Name.Replace(BaseControllerName, string.Empty);
-            var controllerInstanse = Activator.CreateInstance(controller);
+            var controllerInstanse = serviceCollection.CreateInstance(controller) as Controller;
 
             var controllerActions = controller
                 .GetMethods(MethodCriteria)
@@ -45,49 +47,94 @@ namespace SIS.WebServer.Controllers
 
             foreach (var actionInfo in controllerActions)
             {
-                ProcessAction(serverRoutingTable, controllerName, actionInfo, controllerInstanse);
+                AddAction(serverRoutingTable, controllerName, actionInfo, controllerInstanse);
             }
         }
 
-        private static void ProcessAction(IServerRoutingTable serverRoutingTable, string controllerName, MethodInfo actionInfo, object controllerInstanse)
+        private static void AddAction(IServerRoutingTable serverRoutingTable, string controllerName, MethodInfo actionInfo, object controllerInstanse)
         {
-            var action = (Func<IHttpRequest, IHttpResponse>)actionInfo.CreateDelegate(ActionFuncType, controllerInstanse);
+            var (requestMethod, url) = GetActionRequestMethod(actionInfo);
 
-            HttpRequestMethod requestMethod = GetActionRequestMethod(actionInfo);
+            string path = url ?? $"/{controllerName}/{actionInfo.Name}";
 
-            string path = GeneratePath(controllerName, actionInfo.Name);
-
-            serverRoutingTable.Add(requestMethod, path, action);
+            serverRoutingTable.Add(requestMethod, path, (request) => ProcessAction(request, actionInfo, controllerInstanse));
         }
 
-        private static HttpRequestMethod GetActionRequestMethod(MethodInfo actionInfo)
+        private static IHttpResponse ProcessAction(IHttpRequest request, MethodInfo actionInfo, object controllerInstanse)
+        {
+            var parameters = actionInfo.GetParameters();
+            List<object> arguments = new List<object>();
+
+            foreach (var parameter in parameters)
+            {
+                var parameterType = parameter.ParameterType;
+                object parameterValue = null;
+
+                if (!parameterType.IsClass)
+                {
+                    object value = GetValue(request, parameter.Name);
+
+                    parameterValue = Convert.ChangeType(value, parameterType);
+                }
+                else if (parameterType != typeof(string))
+                {
+                    var properties = parameterType.GetProperties();
+                    parameterValue = Activator.CreateInstance(parameterType);
+
+                    foreach (var property in properties)
+                    {
+                        object value = GetValue(request, property.Name);
+
+                        property.SetValue(parameterValue, Convert.ChangeType(value, property.PropertyType));
+                    }
+                }
+
+                arguments.Add(parameterValue);
+            }
+
+            return actionInfo.Invoke(controllerInstanse, arguments.ToArray()) as IHttpResponse;
+        }
+
+        private static object GetValue(IHttpRequest request, string name)
+        {
+            object value = null;
+
+            if (request.FormData.Any(x => string.Compare(x.Key, name, true) == 0))
+            {
+                value = request.FormData.First(x => string.Compare(x.Key, name, true) == 0).Value;
+            }
+
+            if (value == null)
+            {
+                if (request.FormData.Any(x => string.Compare(x.Key, name, true) == 0))
+                {
+                    value = request.QueryData.First(x => string.Compare(x.Key, name, true) == 0).Value;
+                }
+            }
+
+            return value;
+        }
+
+        private static (HttpRequestMethod requestMethod, string url) GetActionRequestMethod(MethodInfo actionInfo)
         {
             var requestMetodAttribute = actionInfo.GetCustomAttribute(BaseRequestMethodAttributeType, false);
 
             if (requestMetodAttribute != null)
             {
-                return (HttpRequestMethod)requestMetodAttribute
-                    .GetType()
+                var attributeType = requestMetodAttribute.GetType();
+
+                HttpRequestMethod requestMethod = (HttpRequestMethod)attributeType
                     .GetProperty(nameof(HttpRequestMethodAttribute.RequestMethod))
                     .GetValue(requestMetodAttribute);
+
+                string url = (string)attributeType
+                    .GetProperty(nameof(HttpRequestMethodAttribute.Url))
+                    .GetValue(requestMetodAttribute);
+
+                return (requestMethod, url);
             }
 
-            return HttpRequestMethod.GET;
-        }
-
-        private static string GeneratePath(string controllerName, string methodName)
-        {
-            if (methodName == "Index")
-            {
-                if (controllerName == "Home")
-                {
-                    return "/";
-                }
-
-                return $"/{controllerName}";
-            }
-
-            return $"/{controllerName}/{methodName}";
+            return (HttpRequestMethod.GET, null);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SIS.WebServer.MyViewEngine
+﻿using SIS.WebServer.DataManager;
+
+namespace SIS.WebServer.MyViewEngine
 {
     public class ErrorView : IView
     {
@@ -9,7 +11,7 @@
             this.errorMessage = errorMessage;
         }
 
-        public string ExecuteTemplate(object viewModel)
+        public string ExecuteTemplate(object viewModel, IdentityUser user)
         {
             return errorMessage;
         }

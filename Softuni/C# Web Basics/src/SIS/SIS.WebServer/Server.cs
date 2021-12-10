@@ -29,6 +29,8 @@ namespace SIS.WebServer
                 .LoadControllers(application.GetType().Assembly, serviceCollection)
                 .LoadStaticFiles();
 
+            Console.WriteLine(string.Join(Environment.NewLine, ServerRoutingTable.GetAllRouteNames()));
+
             TcpListener listener = new TcpListener(IPAddress.Parse(LocalhostIpAddress), port);
 
             listener.Start();

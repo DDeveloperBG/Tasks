@@ -3,6 +3,7 @@ using SIS.HTTP.Enums;
 using SIS.HTTP.Exceptions;
 using SIS.HTTP.Requests;
 using SIS.HTTP.Responses;
+using SIS.WebServer.Authorization;
 using SIS.WebServer.DependencyInversion;
 using SIS.WebServer.Routing;
 using System;
@@ -18,6 +19,7 @@ namespace SIS.WebServer.Controllers
         private static readonly Type BaseControllerType = typeof(Controller);
         private static readonly Type BaseResponceType = typeof(IHttpResponse);
         private static readonly Type BaseRequestMethodAttributeType = typeof(HttpRequestMethodAttribute);
+        private static readonly Type BaseAccessAttributeType = typeof(AccessAthribute);
         private static readonly BindingFlags MethodCriteria = BindingFlags.Public | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.DeclaredOnly;
 
         public static IServerRoutingTable LoadControllers(this IServerRoutingTable serverRoutingTable, Assembly caller, IServiceCollection serviceCollection)
@@ -38,7 +40,6 @@ namespace SIS.WebServer.Controllers
         private static void ProcessController(IServerRoutingTable serverRoutingTable, Type controller, IServiceCollection serviceCollection)
         {
             string controllerName = controller.Name.Replace(BaseControllerName, string.Empty);
-            var controllerInstanse = serviceCollection.CreateInstance(controller) as Controller;
 
             var controllerActions = controller
                 .GetMethods(MethodCriteria)
@@ -47,11 +48,13 @@ namespace SIS.WebServer.Controllers
 
             foreach (var actionInfo in controllerActions)
             {
+                var controllerInstanse = serviceCollection.CreateInstance(controller) as Controller;
+
                 AddAction(serverRoutingTable, controllerName, actionInfo, controllerInstanse);
             }
         }
 
-        private static void AddAction(IServerRoutingTable serverRoutingTable, string controllerName, MethodInfo actionInfo, object controllerInstanse)
+        private static void AddAction(IServerRoutingTable serverRoutingTable, string controllerName, MethodInfo actionInfo, Controller controllerInstanse)
         {
             var (requestMethod, url) = GetActionRequestMethod(actionInfo);
 
@@ -60,8 +63,13 @@ namespace SIS.WebServer.Controllers
             serverRoutingTable.Add(requestMethod, path, (request) => ProcessAction(request, actionInfo, controllerInstanse));
         }
 
-        private static IHttpResponse ProcessAction(IHttpRequest request, MethodInfo actionInfo, object controllerInstanse)
+        private static IHttpResponse ProcessAction(IHttpRequest request, MethodInfo actionInfo, Controller controllerInstanse)
         {
+            controllerInstanse
+                .GetType()
+                .GetProperty(nameof(Controller.Request))
+                .SetValue(controllerInstanse, request);
+
             var parameters = actionInfo.GetParameters();
             List<object> arguments = new List<object>();
 
@@ -70,13 +78,13 @@ namespace SIS.WebServer.Controllers
                 var parameterType = parameter.ParameterType;
                 object parameterValue = null;
 
-                if (!parameterType.IsClass)
+                if (!parameterType.IsClass || parameterType == typeof(string))
                 {
                     object value = GetValue(request, parameter.Name);
 
                     parameterValue = Convert.ChangeType(value, parameterType);
                 }
-                else if (parameterType != typeof(string))
+                else 
                 {
                     var properties = parameterType.GetProperties();
                     parameterValue = Activator.CreateInstance(parameterType);
@@ -90,6 +98,31 @@ namespace SIS.WebServer.Controllers
                 }
 
                 arguments.Add(parameterValue);
+            }
+
+            var accessAttribute = actionInfo.GetCustomAttribute(BaseAccessAttributeType, false);
+
+            if (accessAttribute != null)
+            {
+                var accessAttributeType = accessAttribute.GetType();
+                string redirectUrl = accessAttributeType
+                    .GetProperty(nameof(AccessAthribute.RedirectUrl))
+                    .GetValue(accessAttribute) as string;
+
+                if (accessAttributeType == typeof(AuthorizeAttribute))
+                {
+                    if (!controllerInstanse.IsUserSignedIn())
+                    {
+                        return controllerInstanse.Redirect(redirectUrl);
+                    }
+                }
+                else if(accessAttributeType == typeof(GuestOnlyAttribute))
+                {
+                    if (controllerInstanse.IsUserSignedIn())
+                    {
+                        return controllerInstanse.Redirect(redirectUrl);
+                    }
+                }
             }
 
             return actionInfo.Invoke(controllerInstanse, arguments.ToArray()) as IHttpResponse;
@@ -106,7 +139,7 @@ namespace SIS.WebServer.Controllers
 
             if (value == null)
             {
-                if (request.FormData.Any(x => string.Compare(x.Key, name, true) == 0))
+                if (request.QueryData.Any(x => string.Compare(x.Key, name, true) == 0))
                 {
                     value = request.QueryData.First(x => string.Compare(x.Key, name, true) == 0).Value;
                 }

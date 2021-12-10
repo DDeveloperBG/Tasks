@@ -22,7 +22,7 @@ namespace SIS.WebServer.Tests
             
             IViewEngine viewEngine = new ViewEngine();
 
-            string actualResult = viewEngine.GetHtml(input, null);
+            string actualResult = viewEngine.GetHtml(input, null, null);
 
             Assert.Equal(expectedResult, actualResult);
         }
@@ -39,7 +39,7 @@ namespace SIS.WebServer.Tests
 
             var viewModel = new MockClass1("gosho20@gmail.com", "Gosho", 20);
 
-            string actualResult = viewEngine.GetHtml(input, viewModel);
+            string actualResult = viewEngine.GetHtml(input, viewModel, null);
 
             Assert.Equal(expectedResult, actualResult);
         }       

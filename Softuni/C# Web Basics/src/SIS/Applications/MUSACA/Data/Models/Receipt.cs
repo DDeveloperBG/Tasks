@@ -9,6 +9,7 @@ namespace MUSACA.Data.Models
         public Receipt()
         {
             Orders = new HashSet<Order>();
+            IssuedOn = DateTime.UtcNow;
         }
 
         [Key]

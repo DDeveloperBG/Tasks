@@ -25,19 +25,24 @@ namespace MUSACA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CashierId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ReceiptId")
+                    b.Property<Guid?>("ReceiptId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CashierId");
 
                     b.HasIndex("ProductId");
 
@@ -127,6 +132,12 @@ namespace MUSACA.Migrations
 
             modelBuilder.Entity("MUSACA.Data.Models.Order", b =>
                 {
+                    b.HasOne("MUSACA.Data.Models.User", "Cashier")
+                        .WithMany("Orders")
+                        .HasForeignKey("CashierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MUSACA.Data.Models.Product", "Product")
                         .WithMany("Orders")
                         .HasForeignKey("ProductId")
@@ -135,9 +146,9 @@ namespace MUSACA.Migrations
 
                     b.HasOne("MUSACA.Data.Models.Receipt", "Receipt")
                         .WithMany("Orders")
-                        .HasForeignKey("ReceiptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReceiptId");
+
+                    b.Navigation("Cashier");
 
                     b.Navigation("Product");
 
@@ -167,6 +178,8 @@ namespace MUSACA.Migrations
 
             modelBuilder.Entity("MUSACA.Data.Models.User", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("Receipts");
                 });
 #pragma warning restore 612, 618

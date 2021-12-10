@@ -1,0 +1,60 @@
+﻿<main class="mt-3 container">
+    <div class="mx-auto col-10">
+        <h1 class="text-center text-musaca" style="color:black;" />Receipt Details<h1 />
+        <hr class="hr-2 bg-musaca">
+        <div class="products-holder mt-4">
+            @foreach(var order in Model.Orders)
+            {
+            @{
+            var formattedPrice = $"{order.Price:F2}";
+            }
+            <div class="order d-flex justify-content-between">
+                <div class="order-name w-75">
+                    <h4>@order.Name</h4>
+                </div>
+                <div class="order-quantity d-flex justify-content-end w-25">
+                    <h4 class="text-center w-50">x@order.Quantity</h4>
+                </div>
+                <div class="order-price d-flex justify-content-end w-25">
+                    <h4 class="text-center w-50">$@formattedPrice</h4>
+                </div>
+            </div>
+            }
+            <hr class="hr-2 bg-musaca">
+            <div class="order d-flex justify-content-between">
+                <div class="order-name">
+                    <h3>Total</h3>
+                </div>
+                <div class="order-price d-flex justify-content-end">
+                    <h3 class="text-center">$@Model.Total</h3>
+                </div>
+            </div>
+            <hr class="hr-2 bg-musaca">
+            <div class="order d-flex justify-content-between">
+                <div class="order-name">
+                    <h3>Issued On</h3>
+                </div>
+                <div class="order-price d-flex justify-content-end">
+                    <h3 class="text-center">@Model.IssuedOn</h3>
+                </div>
+            </div>
+            <div class="order d-flex justify-content-between">
+                <div class="order-name">
+                    <h3>Cashier</h3>
+                </div>
+                <div class="order-price d-flex justify-content-end">
+                    <h3 class="text-center">@Model.Cashier</h3>
+                </div>
+            </div>
+            <hr class="hr-2 bg-musaca">
+            <div class="order d-flex justify-content-between">
+                <div class="order-name">
+                    <h3>Receipt</h3>
+                </div>
+                <div class="order-price d-flex justify-content-end">
+                    <h3 class="text-center">@Model.Receipt</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Emit;
+using SIS.WebServer.DataManager;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,7 @@ namespace SIS.WebServer.MyViewEngine
 {
     public class ViewEngine : IViewEngine
     {
-        public string GetHtml(string templateCode, object viewModel)
+        public string GetHtml(string templateCode, object viewModel, IdentityUser user)
         {
             string csharpCode = GenerateCSharpCode(templateCode, viewModel?.GetType());
             IView executableObject = GenerateExecutableCоde(csharpCode, viewModel);
@@ -21,7 +22,7 @@ namespace SIS.WebServer.MyViewEngine
             string html;
             try
             {
-                html = executableObject.ExecuteTemplate(viewModel);
+                html = executableObject.ExecuteTemplate(viewModel, user);
             }
             catch (Exception e)
             {
@@ -56,40 +57,88 @@ namespace SIS.WebServer.MyViewEngine
 
         private string GetMethodBodyCode(string templateCode)
         {
-            Regex csharpCodeRegex = new Regex(@"[^\""\s&\'\<]+");
-            var supportedOperators = new List<string> { "for", "while", "if", "else", "foreach" };
-            StringBuilder csharpCode = new StringBuilder();
-            StringReader sr = new StringReader(templateCode);
-            string line;
-            while ((line = sr.ReadLine()) != null)
+            var lines = templateCode.Split(new string[] { "\r\n", "\n\r", "\n" }, StringSplitOptions.None);
+            var csharpCode = new StringBuilder();
+            var supportedOperators = new[] { "for", "if", "else" };
+            var csharpCodeRegex = new Regex(@"[^\s<""\&]+", RegexOptions.Compiled);
+            var csharpCodeDepth = 0; // If > 0, Inside CSharp Syntax
+
+            foreach (var line in lines)
             {
-                if (supportedOperators.Any(x => line.TrimStart().StartsWith("@" + x)))
+                string currentLine = line;
+
+                if (currentLine.TrimStart().StartsWith("@{"))
                 {
-                    var atSignLocation = line.IndexOf("@");
-                    line = line.Remove(atSignLocation, 1);
-                    csharpCode.AppendLine(line);
+                    csharpCodeDepth++;
                 }
-                else if (line.TrimStart().StartsWith("{") ||
-                    line.TrimStart().StartsWith("}"))
+                else if (currentLine.TrimStart().StartsWith("{") || currentLine.TrimStart().StartsWith("}"))
                 {
-                    csharpCode.AppendLine(line);
+                    // { / }
+                    if (csharpCodeDepth > 0)
+                    {
+                        if (currentLine.TrimStart().StartsWith("{"))
+                        {
+                            csharpCodeDepth++;
+                        }
+                        else if (currentLine.TrimStart().StartsWith("}"))
+                        {
+                            if ((--csharpCodeDepth) == 0)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    csharpCode.AppendLine(currentLine);
+                }
+                else if (csharpCodeDepth > 0)
+                {
+                    csharpCode.AppendLine(currentLine);
+                    continue;
+                }
+                else if (supportedOperators.Any(x => currentLine.TrimStart().StartsWith("@" + x)))
+                {
+                    // @C#
+                    var atSignLocation = currentLine.IndexOf("@");
+                    var csharpLine = currentLine.Remove(atSignLocation, 1);
+                    csharpCode.AppendLine(csharpLine);
                 }
                 else
                 {
-                    csharpCode.Append($"html.AppendLine(@\"");
-
-                    while (line.Contains("@"))
+                    var csharpStringToAppend = "html.AppendLine(@\"";
+                    var restOfLine = currentLine;
+                    while (restOfLine.Contains("@"))
                     {
-                        var atSignLocation = line.IndexOf("@");
-                        var htmlBeforeAtSign = line.Substring(0, atSignLocation);
-                        csharpCode.Append(htmlBeforeAtSign.Replace("\"", "\"\"") + "\" + ");
-                        var lineAfterAtSign = line[(atSignLocation + 1)..];
-                        var code = csharpCodeRegex.Match(lineAfterAtSign).Value;
-                        csharpCode.Append(code + " + @\"");
-                        line = lineAfterAtSign[code.Length..];
+                        var atSignLocation = restOfLine.IndexOf("@");
+                        var plainText = restOfLine.Substring(0, atSignLocation).Replace("\"", "\"\"");
+                        var csharpExpression = csharpCodeRegex.Match(restOfLine.Substring(atSignLocation + 1))?.Value;
+
+                        if (csharpExpression.Contains("{") && csharpExpression.Contains("}"))
+                        {
+                            var csharpInlineExpression =
+                                csharpExpression.Substring(1, csharpExpression.IndexOf("}") - 1);
+
+                            csharpStringToAppend += plainText + "\" + " + csharpInlineExpression + " + @\"";
+
+                            csharpExpression = csharpExpression.Substring(0, csharpExpression.IndexOf("}") + 1);
+                        }
+                        else
+                        {
+                            csharpStringToAppend += plainText + "\" + " + csharpExpression + " + @\"";
+                        }
+
+                        if (restOfLine.Length <= atSignLocation + csharpExpression.Length + 1)
+                        {
+                            restOfLine = string.Empty;
+                        }
+                        else
+                        {
+                            restOfLine = restOfLine.Substring(atSignLocation + csharpExpression.Length + 1);
+                        }
                     }
 
-                    csharpCode.AppendLine(line.Replace("\"", "\"\"") + "\");");
+                    csharpStringToAppend += $"{restOfLine.Replace("\"", "\"\"")}\");";
+                    csharpCode.AppendLine(csharpStringToAppend);
                 }
             }
 
@@ -103,14 +152,16 @@ namespace SIS.WebServer.MyViewEngine
                     using System.Linq;
                     using System.Collections.Generic;
                     using SIS.WebServer.MyViewEngine;
+                    using SIS.WebServer.DataManager;
                     
                     namespace ViewNamespace
                     {
                         public class ViewClass : IView
                         {
-                            public string ExecuteTemplate(object viewModel)
+                            public string ExecuteTemplate(object viewModel, IdentityUser user)
                             {
                                 var Model = viewModel as " + modelTypeName + @";
+                                var User = user;           
                                 var html = new StringBuilder();
                                 " + methodBodyCode + @" 
                                 return html.ToString();

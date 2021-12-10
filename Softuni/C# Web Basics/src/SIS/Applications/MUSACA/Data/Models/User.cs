@@ -1,34 +1,26 @@
-﻿using MUSACA.Data.Enums;
+﻿using SIS.WebServer.DataManager;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MUSACA.Data.Models
 {
-    public class User
+    public class User : IdentityUser
     {
         public User()
         {
-            Receipts = new HashSet<Receipt>();
+            this.Id = Guid.NewGuid();
+            this.Role = UserRole.User;
+            this.Receipts = new HashSet<Receipt>();
+            this.Orders = new HashSet<Order>();
         }
-
-        [Key]
-        public Guid Id { get; set; }
-
-        [Required]
-        [MaxLength(300)]
-        public string Username { get; set; }
 
         [Required]
         [MaxLength(300)]
         public string Password { get; set; }
 
-        [Required]
-        [MaxLength(300)]
-        public string Email { get; set; }
-
-        public UserRole Role { get; set; }
-
         public ICollection<Receipt> Receipts { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

@@ -44,7 +44,7 @@ namespace MUSACA.Data
             modelBuilder
                .Entity<Receipt>()
                .HasOne(x => x.Cashier)
-                       .WithMany(x => x.Receipts);
+               .WithMany(x => x.Receipts);
         }
     }
 }

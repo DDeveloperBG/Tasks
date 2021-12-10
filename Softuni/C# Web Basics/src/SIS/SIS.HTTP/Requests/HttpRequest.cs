@@ -6,6 +6,7 @@ using SIS.HTTP.Headers;
 using SIS.HTTP.Sessions;
 using System;
 using System.Collections.Generic;
+using System.Web;
 
 namespace SIS.HTTP.Requests
 {
@@ -73,7 +74,7 @@ namespace SIS.HTTP.Requests
                 throw new BadRequestException();
             }
 
-            Url = requestLine[1];
+            Url = HttpUtility.UrlDecode(requestLine[1]);
         }
 
         private void ParseRequestPath()
@@ -166,7 +167,7 @@ namespace SIS.HTTP.Requests
             {
                 string[] parts = param.Split(HttpParameterNameValueSeparator, 2);
 
-                FormData.Add(parts[0], parts[1]);
+                FormData.Add(parts[0], HttpUtility.UrlDecode(parts[1]));
             }
         }
 

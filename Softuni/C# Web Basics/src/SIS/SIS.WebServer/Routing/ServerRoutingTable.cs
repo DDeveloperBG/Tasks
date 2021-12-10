@@ -43,5 +43,10 @@ namespace SIS.WebServer.Routing
 
             return route.Action;
         }
+
+        public List<string> GetAllRouteNames()
+        {
+            return this.routes.Select(x => x.Path).ToList();
+        }
     }
 }

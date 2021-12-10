@@ -38,11 +38,6 @@ namespace SIS.HTTP.Sessions
 
         public object GetParameter(string name)
         {
-            if (!parameters.ContainsKey(name))
-            {
-                throw new BadRequestException();
-            }
-
             return parameters[name];
         }
     }
